@@ -9,21 +9,32 @@ public class PlayerControl : MonoBehaviour
 
     private PlayerMovement pM;
     private PlayerHP pH;
+
+    private PlayerAttack pA;
     // Start is called before the first frame update
     void Start()
     {
         pM = gameObject.GetComponent<PlayerMovement>();
         pH = gameObject.GetComponent<PlayerHP>();
+        pA = gameObject.GetComponent<PlayerAttack>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        horizontalValue = Input.GetAxis("Horizontal");
-        verticalValue = Input.GetAxis("Vertical");
-        if(Input.GetKeyDown(KeyCode.Space))
+        if(!pA.attacking)
         {
-            pH.TakeDamage(1);
+            horizontalValue = Input.GetAxis("Horizontal");
+            verticalValue = Input.GetAxis("Vertical");
+        }
+        else{
+            horizontalValue = 0;
+            verticalValue = 0;
+        }
+        if(Input.GetKeyDown(KeyCode.Space)&&(!pA.attacking || pA.cancellable))
+        {
+            pA.StopAllCoroutines();
+            StartCoroutine(pA.attack());
         }
     }
 

@@ -28,8 +28,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if(horizontal != 0 || vertical != 0)
         {
+            Vector3 cameraForward = playerCamera.transform.forward;
+            Vector3 cameraRight = playerCamera.transform.right;
+            Vector3 newSpeed = (horizontal*cameraRight+vertical*cameraForward)*speed;
+            newSpeed.y = 0;
+            rb.velocity = newSpeed;
             Rotate(horizontal,vertical);
-            rb.velocity = transform.forward*speed;
         }
         else
         {
@@ -46,6 +50,6 @@ public class PlayerMovement : MonoBehaviour
 
         Quaternion target = Quaternion.LookRotation(direction, Vector3.up);
         Quaternion increment = Quaternion.Lerp(rb.rotation, target, rotationSpeed * Time.deltaTime);
-        rb.MoveRotation(increment);
+        rb.MoveRotation(target);
     }
 }
