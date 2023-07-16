@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   windUp: 0.3
   attackDuration: 1.5
-  lastCancellable: 4
-  endLag: 6
+  lastCancellable: 1.9
+  endLag: 2
   enemy: 0

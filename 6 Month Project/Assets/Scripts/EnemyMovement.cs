@@ -8,7 +8,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]
     private NavMeshAgent agent;
     [SerializeField]
-    private float attackRadius, attackDuration, stopTimer;
+    private float attackRadius, attackDuration, stopTimer, speed = 5;
     [SerializeField]
     private GameObject player;
     private bool attacking = false;
@@ -20,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
         agent = gameObject.GetComponent<NavMeshAgent>();
         agent.stoppingDistance = attackRadius;
         agent.SetDestination(player.transform.position);
+        agent.speed = speed;
     }
 
     // Update is called once per frame

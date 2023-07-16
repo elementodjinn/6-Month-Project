@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Attack3
   m_EditorClassIdentifier: 
   windUp: 0.5
-  attackDuration: 2.5
-  lastCancellable: 2.5
-  endLag: 6.5
+  attackDuration: 2
+  lastCancellable: 2
+  endLag: 3
   enemy: 0

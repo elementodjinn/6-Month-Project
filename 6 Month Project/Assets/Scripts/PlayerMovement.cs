@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        rb.angularVelocity = Vector3.zero;
     }
 
     public void Move(float horizontal, float vertical)
@@ -30,14 +30,18 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 cameraForward = playerCamera.transform.forward;
             Vector3 cameraRight = playerCamera.transform.right;
-            Vector3 newSpeed = (horizontal*cameraRight+vertical*cameraForward)*speed;
+            Vector3 newSpeed = (horizontal*cameraRight+vertical*cameraForward);
             newSpeed.y = 0;
-            rb.velocity = newSpeed;
+            rb.velocity = newSpeed.normalized * speed;
             Rotate(horizontal,vertical);
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = Vector3.Lerp(rb.velocity,Vector3.zero,0.3f);
+            if(rb.velocity.magnitude < 0.2)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
     }
 
