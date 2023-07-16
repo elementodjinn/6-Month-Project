@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
+    [SerializeField]
+    protected Animator _animator;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -43,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = Vector3.zero;
             }
         }
+
+        _animator?.SetFloat("MovementX", Mathf.Clamp(horizontal,0f,1f));
+        _animator?.SetFloat("MovementY", Mathf.Clamp(vertical, 0f, 1f));
+        _animator?.SetFloat("Speed", Mathf.Clamp(rb.velocity.magnitude, 0f, 1f));
     }
 
     void Rotate(float horizontal, float vertical)
