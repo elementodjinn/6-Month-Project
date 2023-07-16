@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private Rigidbody rb;
 
+    [SerializeField]
+    protected Animator _animator;
+
 
     // Start is called before the first frame update
     void Awake()
@@ -21,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        rb.angularVelocity = Vector3.zero;
     }
 
     public void Move(float horizontal, float vertical)
@@ -30,15 +33,23 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 cameraForward = playerCamera.transform.forward;
             Vector3 cameraRight = playerCamera.transform.right;
-            Vector3 newSpeed = (horizontal*cameraRight+vertical*cameraForward)*speed;
+            Vector3 newSpeed = (horizontal*cameraRight+vertical*cameraForward);
             newSpeed.y = 0;
-            rb.velocity = newSpeed;
+            rb.velocity = newSpeed.normalized * speed;
             Rotate(horizontal,vertical);
         }
         else
         {
-            rb.velocity = Vector3.zero;
+            rb.velocity = Vector3.Lerp(rb.velocity,Vector3.zero,0.3f);
+            if(rb.velocity.magnitude < 0.2)
+            {
+                rb.velocity = Vector3.zero;
+            }
         }
+
+        _animator?.SetFloat("MovementX", Mathf.Clamp(horizontal,0f,1f));
+        _animator?.SetFloat("MovementY", Mathf.Clamp(vertical, 0f, 1f));
+        _animator?.SetFloat("Speed", Mathf.Clamp(rb.velocity.magnitude, 0f, 1f));
     }
 
     void Rotate(float horizontal, float vertical)

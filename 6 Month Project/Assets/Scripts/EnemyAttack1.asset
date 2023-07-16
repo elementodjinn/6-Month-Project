@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e744f79ff70c82941a2abbb8ae91fa6a, type: 3}
   m_Name: EnemyAttack1
   m_EditorClassIdentifier: 
-  windUp: 0.5
-  attackDuration: 1
+  windUp: 0.75
+  attackDuration: 1.25
   lastCancellable: 1
   endLag: 2
   enemy: 1
